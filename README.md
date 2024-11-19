@@ -23,7 +23,7 @@ The system provides flexibility to manually adjust the estimates for special sit
 **Supplier Coordination**: 
 The system generates detailed ordering form reports that can be sent directly to suppliers. These reports include:
 
- ** Ingredient Name and Code**: 
+ **Ingredient Name and Code**: 
   Clear identification of each item to be ordered.
 
   **Required Quantity**: 
