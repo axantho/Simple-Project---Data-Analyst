@@ -1,6 +1,7 @@
 
 ||**Project Description: Raw Material Ordering Estimation with Ordering Form Report Generation**||
 
+
 The Raw Material Ordering Estimation project is designed to optimize the ordering and management of raw materials in a food and beverage operation. The system integrates sales forecasting, buffer stock calculations, yield adjustments, and real-time stock tracking to ensure that raw materials are ordered in the right quantities. In addition to these features, the system includes the capability to generate detailed ordering form reports, streamlining communication with suppliers and ensuring a smooth procurement process.
 
 Key Components:
