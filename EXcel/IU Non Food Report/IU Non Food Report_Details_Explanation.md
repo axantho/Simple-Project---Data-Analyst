@@ -2,16 +2,27 @@
 
 The IU Non-Food Project is designed to provide a comparative analysis of non-food item usage in outlets, comparing the quantities and costs of items used in the last month (H-1) versus two months ago (H-2). 
 
+
+
 The project will focus on the following key data points for each outlet:
 
 -Item Name            : The name of the non-food item used.
+
 -Item Code            : A unique identifier for the item.
+
 -Category Name        : The specific category to which the item belongs (e.g., cleaning supplies, packaging, etc.).
+
 -UOM (Unit of Measure): The measurement unit used for the item (e.g., pieces, liters, etc.).
+
 -Unit Price           : The cost per unit of the item.
+
 -Quantity Used (Qty)  : The total amount of the item consumed by the outlet for the respective month (H-1 and H-2).
+
 -Difference (Selisih) : The difference in quantity used between H-1 and H-2.
+
 -Price Difference (Selisih Harga): The price difference for the item between the two months.
+
+
 
 
 
