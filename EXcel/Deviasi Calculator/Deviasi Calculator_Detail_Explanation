@@ -1,1 +1,29 @@
+Project: Deviasi Form - All Outlet
+
+Description:
+The Deviasi Form project is designed to streamline the process of monitoring and analyzing deviations in raw material usage and inventory management across all outlets in the organization. The main objective of this project is to create a standardized form that can be used at each outlet to record and analyze discrepancies between the expected (theoretical) stock usage and the actual stock used, ensuring that raw materials are used efficiently and any variances are detected and addressed promptly.
+
+Key features of the Deviasi Form include:
+
+Data Input and Tracking:
+The form will capture key information related to each outlet, such as menu code, menu name, gramasi (portion size), total sales per portion, total sales x gramasi (total weight sold), yield, and yield value.
+Store Request Out (SR Out), Stock Awal (starting stock), Purchases, Store Request In (SR In), Stock Akhir Fisik (actual stock remaining), and Stock Akhir Teoritis (theoretical stock remaining) will also be recorded.
+
+Deviation Calculation:
+The deviation value will be calculated by comparing the actual stock usage with the theoretical stock usage. The formula for calculating deviation involves comparing the total sales x gramasi against the stock usage as expected based on yield and theoretical values.
+A percentage deviation will be computed, showing the variance between the expected and actual stock usage.
+
+Upper and Lower Limits:
+The system will incorporate upper and lower deviation limits, typically set as 5% of the theoretical stock used, to determine acceptable variance thresholds.
+If the actual stock usage exceeds the upper limit, it indicates waste; if it falls below the lower limit, it signals an opportunity for better efficiency.
+Deviations falling within the acceptable range are tolerated, while those outside the range trigger corrective actions.
+
+Outlet-Level Reporting:
+The form will generate reports at the outlet level, allowing each location to track its deviation data and make necessary adjustments to optimize raw material usage.
+The data will be collected periodically, helping to identify trends, track performance, and pinpoint areas for improvement at the outlet level.
+
+Centralized Monitoring:
+All outlet data will be consolidated into a central database or system, allowing for comprehensive monitoring of stock usage across all locations. This will enable the organization to make informed decisions, improve inventory control, reduce waste, and optimize purchasing strategies.
+
+The Deviasi Form project aims to enhance the accuracy and efficiency of inventory management, reduce waste, and improve overall operational performance. By ensuring that raw materials are used within optimal limits, the system will contribute to cost savings and improve the profitability of the organization across all outlets.
 
