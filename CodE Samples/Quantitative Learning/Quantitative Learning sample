@@ -1,1 +1,59 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Step 1: Data Collection - Create a DataFrame for the sales data
+data = {
+    'Week': ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+    'Total Sales ($)': [15000, 16500, 14000, 17000],
+    'Promo Sales ($)': [4500, 5000, 3800, 5500],
+    'Total Units Sold': [2000, 2200, 1900, 2300],
+    'Promo Units Sold': [600, 700, 550, 750],
+    'Total Transactions': [500, 520, 480, 540]
+}
+
+df = pd.DataFrame(data)
+
+# Step 2: Calculate key metrics
+
+# 2.1. Promo Sales Contribution to Total Sales
+df['Promo Sales %'] = (df['Promo Sales ($)'] / df['Total Sales ($)']) * 100
+
+# 2.2. Average Promotional Sales per Week
+avg_promo_sales = df['Promo Sales ($)'].mean()
+
+# 2.3. Average Sales per Transaction
+df['Avg Sales per Transaction ($)'] = df['Total Sales ($)'] / df['Total Transactions']
+
+# 2.4. Promo Units Sold vs. Total Units Sold
+df['Promo Units %'] = (df['Promo Units Sold'] / df['Total Units Sold']) * 100
+
+# Step 3: Display Results
+print(df)
+
+# 3.1. Plot Promo Sales vs Total Sales Percentage
+plt.figure(figsize=(10, 6))
+plt.plot(df['Week'], df['Promo Sales %'], marker='o', linestyle='-', color='b', label='Promo Sales %')
+plt.title('Promo Sales Contribution to Total Sales')
+plt.xlabel('Week')
+plt.ylabel('Promo Sales %')
+plt.grid(True)
+plt.legend()
+plt.show()
+
+# 3.2. Plot Promo Units Sold vs Total Units Sold Percentage
+plt.figure(figsize=(10, 6))
+plt.plot(df['Week'], df['Promo Units %'], marker='o', linestyle='-', color='g', label='Promo Units %')
+plt.title('Promo Units Contribution to Total Units Sold')
+plt.xlabel('Week')
+plt.ylabel('Promo Units %')
+plt.grid(True)
+plt.legend()
+plt.show()
+
+# 3.3. Display the Average Promo Sales per Week
+print(f"Average Promo Sales per Week: ${avg_promo_sales:.2f}")
+
+# 3.4. Display Average Sales per Transaction
+avg_sales_per_transaction = df['Avg Sales per Transaction ($)'].mean()
+print(f"Average Sales per Transaction: ${avg_sales_per_transaction:.2f}")
 
