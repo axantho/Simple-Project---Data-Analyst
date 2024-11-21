@@ -1,0 +1,105 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Chess board dimensions
+const int BOARD_SIZE = 8;
+
+// Piece representations
+const char EMPTY = '.';
+const char WHITE_PAWN = 'P';
+const char BLACK_PAWN = 'p';
+
+class ChessBoard {
+private:
+    vector<vector<char>> board;
+
+public:
+    ChessBoard() {
+        board.resize(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY));
+        initializeBoard();
+    }
+
+    // Initialize the board with pawns only for simplicity
+    void initializeBoard() {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            board[1][i] = BLACK_PAWN; // Black pawns
+            board[6][i] = WHITE_PAWN; // White pawns
+        }
+    }
+
+    // Display the board
+    void displayBoard() {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                cout << board[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    // Move a piece from source to destination
+    bool movePiece(int srcRow, int srcCol, int destRow, int destCol) {
+        if (isValidMove(srcRow, srcCol, destRow, destCol)) {
+            board[destRow][destCol] = board[srcRow][srcCol];
+            board[srcRow][srcCol] = EMPTY;
+            return true;
+        }
+        return false;
+    }
+
+    // Validate a move (basic validation for pawns)
+    bool isValidMove(int srcRow, int srcCol, int destRow, int destCol) {
+        // Check bounds
+        if (srcRow < 0 || srcRow >= BOARD_SIZE || srcCol < 0 || srcCol >= BOARD_SIZE ||
+            destRow < 0 || destRow >= BOARD_SIZE || destCol < 0 || destCol >= BOARD_SIZE)
+            return false;
+
+        char piece = board[srcRow][srcCol];
+        if (piece == EMPTY)
+            return false;
+
+        if (piece == WHITE_PAWN) {
+            // White pawns move up
+            if (destRow == srcRow - 1 && destCol == srcCol && board[destRow][destCol] == EMPTY)
+                return true;
+        } else if (piece == BLACK_PAWN) {
+            // Black pawns move down
+            if (destRow == srcRow + 1 && destCol == srcCol && board[destRow][destCol] == EMPTY)
+                return true;
+        }
+
+        return false;
+    }
+};
+
+int main() {
+    ChessBoard chessBoard;
+    string input;
+    int srcRow, srcCol, destRow, destCol;
+
+    cout << "Welcome to Simple Chess!" << endl;
+    while (true) {
+        chessBoard.displayBoard();
+        cout << "Enter your move (format: srcRow srcCol destRow destCol) or type 'exit' to quit: ";
+        cin >> input;
+        if (input == "exit")
+            break;
+
+        try {
+            srcRow = stoi(input);
+            cin >> srcCol >> destRow >> destCol;
+
+            if (!chessBoard.movePiece(srcRow, srcCol, destRow, destCol)) {
+                cout << "Invalid move! Try again." << endl;
+            }
+        } catch (exception &e) {
+            cout << "Invalid input format! Use numbers for row/column positions." << endl;
+        }
+    }
+
+    cout << "Thank you for playing!" << endl;
+    return 0;
+}
