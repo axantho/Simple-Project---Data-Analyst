@@ -1,1 +1,71 @@
 
+
+import java.util.Scanner;
+
+public class Hangman {
+
+    // Word to be guessed
+    private static String wordToGuess = "JAVA";
+    private static StringBuilder wordProgress = new StringBuilder("____");  // represents the current state of the word
+    private static int attemptsLeft = 6;  // Number of attempts before losing
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String guessedLetters = "";  // String to store guessed letters
+
+        System.out.println("Welcome to Hangman!");
+        System.out.println("Guess the word: " + wordProgress);
+        
+        // Main game loop
+        while (attemptsLeft > 0 && wordProgress.toString().contains("_")) {
+            System.out.println("\nAttempts left: " + attemptsLeft);
+            System.out.println("Guessed letters: " + guessedLetters);
+            System.out.println("Current word: " + wordProgress);
+            System.out.print("Enter a letter to guess: ");
+            String guess = scanner.next().toUpperCase();
+
+            // Validate the input
+            if (guess.length() != 1 || !Character.isLetter(guess.charAt(0))) {
+                System.out.println("Please enter a valid letter.");
+                continue;
+            }
+
+            // Check if the letter has already been guessed
+            if (guessedLetters.contains(guess)) {
+                System.out.println("You've already guessed that letter.");
+                continue;
+            }
+
+            // Add the guessed letter to the guessedLetters string
+            guessedLetters += guess;
+
+            // Check if the guess is correct
+            if (wordToGuess.contains(guess)) {
+                System.out.println("Good guess!");
+                // Update wordProgress based on the guess
+                for (int i = 0; i < wordToGuess.length(); i++) {
+                    if (wordToGuess.charAt(i) == guess.charAt(0)) {
+                        wordProgress.setCharAt(i, guess.charAt(0));
+                    }
+                }
+            } else {
+                System.out.println("Incorrect guess.");
+                attemptsLeft--;  // Decrease attempts for incorrect guess
+            }
+
+            // Check if the word is fully guessed
+            if (!wordProgress.toString().contains("_")) {
+                System.out.println("\nCongratulations! You've guessed the word: " + wordProgress);
+                break;
+            }
+        }
+
+        // If attempts run out
+        if (attemptsLeft == 0) {
+            System.out.println("\nGame over! The word was: " + wordToGuess);
+        }
+
+        scanner.close();
+    }
+}
+
