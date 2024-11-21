@@ -1,1 +1,50 @@
+# Importing required libraries
+from textblob import TextBlob
+import nltk
+
+# Ensure that the necessary NLTK resources are downloaded
+nltk.download('movie_reviews')
+
+# Sample customer reviews for qualitative analysis
+reviews = [
+    "I absolutely love this product! It has changed my life.",
+    "Worst purchase ever. The quality is terrible and it broke within a week.",
+    "The product is okay, not great, but not bad either.",
+    "Really satisfied with my purchase. Worth every penny!",
+    "I am not happy with the product. It doesn’t work as expected."
+]
+
+# Function to analyze sentiment of each review
+def analyze_sentiment(reviews):
+    sentiments = []
+
+    for review in reviews:
+        # Create a TextBlob object for sentiment analysis
+        blob = TextBlob(review)
+        
+        # Classify sentiment polarity
+        sentiment = "Neutral"
+        if blob.sentiment.polarity > 0:
+            sentiment = "Positive"
+        elif blob.sentiment.polarity < 0:
+            sentiment = "Negative"
+        
+        sentiments.append({
+            "review": review,
+            "sentiment": sentiment,
+            "polarity": blob.sentiment.polarity,
+            "subjectivity": blob.sentiment.subjectivity
+        })
+    
+    return sentiments
+
+# Perform sentiment analysis on reviews
+results = analyze_sentiment(reviews)
+
+# Display the results
+for result in results:
+    print(f"Review: {result['review']}")
+    print(f"Sentiment: {result['sentiment']}")
+    print(f"Polarity: {result['polarity']:.2f}, Subjectivity: {result['subjectivity']:.2f}")
+    print('-' * 50)
 
