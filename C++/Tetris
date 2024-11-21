@@ -1,1 +1,197 @@
+#include <SFML/Graphics.hpp>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+
+using namespace sf;
+
+// Grid size
+const int gridWidth = 10;
+const int gridHeight = 20;
+const int tileSize = 30;
+
+// Tetromino shapes
+const std::vector<std::vector<std::vector<int>>> tetrominoes = {
+    {{1, 1, 1, 1}},                         // I
+    {{1, 1, 1}, {0, 1, 0}},                 // T
+    {{0, 1, 1}, {1, 1, 0}},                 // S
+    {{1, 1, 0}, {0, 1, 1}},                 // Z
+    {{1, 1, 1}, {1, 0, 0}},                 // L
+    {{1, 1, 1}, {0, 0, 1}},                 // J
+    {{1, 1}, {1, 1}}                        // O
+};
+
+// Colors for each tetromino
+const Color colors[] = {
+    Color::Cyan, Color::Magenta, Color::Green, Color::Red, Color::Yellow, Color::Blue, Color::White
+};
+
+// Grid for the game
+int grid[gridHeight][gridWidth] = {0};
+
+// Tetromino state
+int currentPiece, rotation, currentX, currentY;
+
+// Initialize new piece
+void spawnPiece() {
+    currentPiece = rand() % tetrominoes.size();
+    rotation = 0;
+    currentX = gridWidth / 2 - 2;
+    currentY = 0;
+
+    if ([&]() -> bool {  // Check collision for the new piece
+        const auto& shape = tetrominoes[currentPiece];
+        for (int y = 0; y < shape.size(); y++) {
+            for (int x = 0; x < shape[y].size(); x++) {
+                if (shape[y][x] &&
+                    (currentY + y >= gridHeight || grid[currentY + y][currentX + x])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }()) {
+        throw "Game Over!";
+    }
+}
+
+// Lock the piece into the grid
+void lockPiece() {
+    const auto& shape = tetrominoes[currentPiece];
+    for (int y = 0; y < shape.size(); y++) {
+        for (int x = 0; x < shape[y].size(); x++) {
+            if (shape[y][x]) {
+                grid[currentY + y][currentX + x] = currentPiece + 1;
+            }
+        }
+    }
+}
+
+// Clear full rows
+void clearRows() {
+    for (int y = gridHeight - 1; y >= 0; y--) {
+        bool full = true;
+        for (int x = 0; x < gridWidth; x++) {
+            if (grid[y][x] == 0) {
+                full = false;
+                break;
+            }
+        }
+        if (full) {
+            for (int row = y; row > 0; row--) {
+                for (int col = 0; col < gridWidth; col++) {
+                    grid[row][col] = grid[row - 1][col];
+                }
+            }
+            for (int col = 0; col < gridWidth; col++) {
+                grid[0][col] = 0;
+            }
+            y++;  // Check the same row again
+        }
+    }
+}
+
+// Collision check
+bool checkCollision(int dx, int dy, int dr) {
+    const auto& shape = tetrominoes[currentPiece];
+    int newRot = (rotation + dr) % shape.size();
+    for (int y = 0; y < shape[newRot].size(); y++) {
+        for (int x = 0; x < shape[newRot][y].size(); x++) {
+            if (shape[newRot][y][x]) {
+                int nx = currentX + x + dx;
+                int ny = currentY + y + dy;
+                if (nx < 0 || nx >= gridWidth || ny >= gridHeight || (ny >= 0 && grid[ny][nx])) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+// Main game
+int main() {
+    srand(time(0));
+    RenderWindow window(VideoMode(gridWidth * tileSize, gridHeight * tileSize), "Tetris");
+    RectangleShape tile(Vector2f(tileSize - 2, tileSize - 2));  // Tile size
+
+    try {
+        spawnPiece();
+    } catch (...) {
+        return 1;
+    }
+
+    Clock clock;
+    float timer = 0, delay = 0.5;
+
+    while (window.isOpen()) {
+        float time = clock.restart().asSeconds();
+        timer += time;
+
+        Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed) window.close();
+
+            if (event.type == Event::KeyPressed) {
+                if (event.key.code == Keyboard::Left && !checkCollision(-1, 0, 0)) currentX--;
+                else if (event.key.code == Keyboard::Right && !checkCollision(1, 0, 0)) currentX++;
+                else if (event.key.code == Keyboard::Down && !checkCollision(0, 1, 0)) currentY++;
+                else if (event.key.code == Keyboard::Up && !checkCollision(0, 0, 1)) rotation = (rotation + 1) % tetrominoes[currentPiece].size();
+            }
+        }
+
+        if (timer > delay) {
+            if (!checkCollision(0, 1, 0)) currentY++;
+            else {
+                lockPiece();
+                clearRows();
+                try {
+                    spawnPiece();
+                } catch (...) {
+                    window.close();
+                }
+            }
+            timer = 0;
+        }
+
+        // Render
+        window.clear(Color::Black);
+        for (int y = 0; y < gridHeight; y++) {
+            for (int x = 0; x < gridWidth; x++) {
+                if (grid[y][x] != 0) {
+                    tile.setPosition(x * tileSize, y * tileSize);
+                    tile.setFillColor(colors[grid[y][x] - 1]);
+                    window.draw(tile);
+                }
+            }
+        }
+
+        // Draw current piece
+        const auto& shape = tetrominoes[currentPiece];
+        for (int y = 0; y < shape[rotation].size(); y++) {
+            for (int x = 0; x < shape[rotation][y].size(); x++) {
+                if (shape[rotation][y][x]) {
+                    tile.setPosition((currentX + x) * tileSize, (currentY + y) * tileSize);
+                    tile.setFillColor(colors[currentPiece]);
+                    window.draw(tile);
+                }
+            }
+        }
+
+        window.display();
+    }
+    return 0;
+}
+
+
+
+//=============================================================================================
+//Graphics: Uses SFML for rendering grid and tetrominoes with colors.
+//Controls:
+//Arrow keys for movement and rotation.
+//Down arrow for faster descent.
+//Collision Handling: Prevents overlapping and out-of-bound errors.
+//Row Clearing: Automatically clears filled rows.
+//Game Over: Ends the game when new pieces cannot be spawned.
+//=============================================================================================
 
