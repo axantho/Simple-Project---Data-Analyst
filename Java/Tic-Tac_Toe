@@ -1,1 +1,117 @@
 
+
+import java.util.Scanner;
+
+public class TicTacToe {
+    // 3x3 board for the game
+    private static char[][] board = new char[3][3];
+    private static char currentPlayer = 'X'; // Start with player X
+
+    public static void main(String[] args) {
+        initializeBoard();
+        printBoard();
+        
+        // Game loop
+        while (true) {
+            playerMove();
+            printBoard();
+            
+            // Check for winner
+            if (checkForWinner()) {
+                System.out.println("Player " + currentPlayer + " wins!");
+                break;
+            }
+            
+            // Check for draw
+            if (isBoardFull()) {
+                System.out.println("It's a draw!");
+                break;
+            }
+            
+            // Switch to the other player
+            switchPlayer();
+        }
+    }
+
+    // Initialize the board with empty spaces
+    public static void initializeBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = ' ';
+            }
+        }
+    }
+
+    // Print the current board state
+    public static void printBoard() {
+        System.out.println("\nCurrent Board:");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j]);
+                if (j < 2) System.out.print(" | ");
+            }
+            System.out.println();
+            if (i < 2) System.out.println("--|---|--");
+        }
+        System.out.println();
+    }
+
+    // Handle the player's move
+    public static void playerMove() {
+        Scanner scanner = new Scanner(System.in);
+        int row, col;
+
+        while (true) {
+            System.out.println("Player " + currentPlayer + ", enter your move (row and column [1-3]): ");
+            row = scanner.nextInt() - 1; // Adjust for 0-based index
+            col = scanner.nextInt() - 1; // Adjust for 0-based index
+            
+            if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == ' ') {
+                board[row][col] = currentPlayer;
+                break;
+            } else {
+                System.out.println("Invalid move. Try again.");
+            }
+        }
+    }
+
+    // Switch players after each move
+    public static void switchPlayer() {
+        if (currentPlayer == 'X') {
+            currentPlayer = 'O';
+        } else {
+            currentPlayer = 'X';
+        }
+    }
+
+    // Check for a winner
+    public static boolean checkForWinner() {
+        // Check rows, columns, and diagonals
+        for (int i = 0; i < 3; i++) {
+            if ((board[i][0] == currentPlayer && board[i][1] == currentPlayer && board[i][2] == currentPlayer) || // Row
+                (board[0][i] == currentPlayer && board[1][i] == currentPlayer && board[2][i] == currentPlayer)) { // Column
+                return true;
+            }
+        }
+        
+        // Check diagonals
+        if ((board[0][0] == currentPlayer && board[1][1] == currentPlayer && board[2][2] == currentPlayer) || 
+            (board[0][2] == currentPlayer && board[1][1] == currentPlayer && board[2][0] == currentPlayer)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // Check if the board is full (draw condition)
+    public static boolean isBoardFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == ' ') {
+                    return false; // If there's an empty space, the board isn't full
+                }
+            }
+        }
+        return true; // No empty spaces left, board is full
+    }
+}
