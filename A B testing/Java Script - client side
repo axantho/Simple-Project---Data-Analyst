@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A/B Test - Example</title>
+    <style>
+        #variantA, #variantB { display: none; }
+    </style>
+</head>
+<body>
+    <div id="variantA">
+        <h1>Welcome to Variant A!</h1>
+        <p>This is Variant A's content. Check out our exclusive offer!</p>
+    </div>
+    <div id="variantB">
+        <h1>Welcome to Variant B!</h1>
+        <p>This is Variant B's content. Don't miss out on our limited-time offer!</p>
+    </div>
+
+    <script>
+        // Check if user has already been assigned a variant, else assign randomly
+        let variant = localStorage.getItem('ab_test_variant');
+        if (!variant) {
+            const variants = ['A', 'B'];
+            variant = variants[Math.floor(Math.random() * variants.length)];
+            localStorage.setItem('ab_test_variant', variant); // Save the variant in localStorage
+        }
+
+        // Display the content for the assigned variant
+        document.getElementById(`variant${variant}`).style.display = 'block';
+        console.log(`User assigned to Variant ${variant}`);
+    </script>
+</body>
+</html>
