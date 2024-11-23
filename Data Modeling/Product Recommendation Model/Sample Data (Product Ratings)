@@ -1,1 +1,12 @@
 
+# Simulating customer-product ratings (1-5 scale)
+ratings_data = {
+    'Customer_ID': [1, 1, 2, 2, 3, 3, 4],
+    'Product_ID': [101, 102, 101, 103, 102, 104, 101],
+    'Rating': [5, 3, 4, 5, 2, 4, 3]
+}
+
+ratings_df = pd.DataFrame(ratings_data)
+ratings_df_pivot = ratings_df.pivot(index='Customer_ID', columns='Product_ID', values='Rating').fillna(0)
+
+print(ratings_df_pivot)
