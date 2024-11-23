@@ -1,0 +1,14 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Fit the classifier
+gb_clf.fit(X_train, y_train)
+
+# Plot feature importances
+importances = gb_clf.feature_importances_
+indices = np.argsort(importances)[::-1]
+plt.bar(range(X.shape[1]), importances[indices])
+plt.xlabel("Feature Index")
+plt.ylabel("Importance")
+plt.title("Feature Importance")
+plt.show()
