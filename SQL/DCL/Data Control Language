@@ -1,0 +1,6 @@
+
+-- Grant a user permission
+GRANT SELECT, INSERT ON Employees TO 'username';
+
+-- Revoke a user's permission
+REVOKE INSERT ON Employees FROM 'username';
