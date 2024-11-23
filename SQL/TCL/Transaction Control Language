@@ -1,0 +1,13 @@
+
+-- Start a transaction
+BEGIN TRANSACTION;
+
+-- Execute multiple operations
+UPDATE Employees SET Salary = 80000 WHERE EmployeeID = 2;
+DELETE FROM Employees WHERE EmployeeID = 3;
+
+-- Commit the transaction
+COMMIT;
+
+-- Rollback the transaction
+ROLLBACK;
