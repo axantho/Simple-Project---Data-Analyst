@@ -1,0 +1,2 @@
+-- Retrieve the first 5 employees from the "employees" table
+SELECT * FROM employees LIMIT 5;
