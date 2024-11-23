@@ -1,0 +1,8 @@
+-- Categorize employees based on their salary
+SELECT name, salary,
+  CASE
+    WHEN salary < 40000 THEN 'Low'
+    WHEN salary BETWEEN 40000 AND 60000 THEN 'Medium'
+    ELSE 'High'
+  END AS salary_category
+FROM employees;
