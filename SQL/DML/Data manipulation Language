@@ -1,0 +1,13 @@
+-- Insert a new record
+INSERT INTO Employees (EmployeeID, FirstName, LastName, HireDate)
+VALUES (1, 'John', 'Doe', '2024-01-01');
+
+-- Update a record
+UPDATE Employees
+SET Salary = 75000.00
+WHERE EmployeeID = 1;
+
+-- Delete a record
+DELETE FROM Employees
+WHERE EmployeeID = 1;
+
