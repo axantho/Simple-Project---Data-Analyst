@@ -1,0 +1,9 @@
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Calculate cosine similarity matrix
+cosine_sim = cosine_similarity(ratings_df_pivot)
+
+# Converting cosine similarity matrix to a DataFrame for easier interpretation
+cosine_sim_df = pd.DataFrame(cosine_sim, index=ratings_df_pivot.index, columns=ratings_df_pivot.index)
+
+print(cosine_sim_df)
