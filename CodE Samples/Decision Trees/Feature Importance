@@ -1,0 +1,9 @@
+import pandas as pd
+
+# Feature importance
+feature_importance = pd.DataFrame({
+    'Feature': data.feature_names,
+    'Importance': clf.feature_importances_
+}).sort_values(by='Importance', ascending=False)
+
+print(feature_importance)
