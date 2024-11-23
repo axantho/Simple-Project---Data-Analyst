@@ -1,1 +1,22 @@
 
+import pandas as pd
+import numpy as np
+
+# Creating a simulated sales dataset
+data = {
+    'Order_ID': [101, 102, 103, 104, 105, 106, 107],
+    'Product_ID': [1, 2, 3, 4, 1, 2, 3],
+    'Product_Name': ['Laptop', 'Smartphone', 'Tablet', 'Monitor', 'Laptop', 'Smartphone', 'Tablet'],
+    'Quantity': [1, 2, 3, 1, 2, 3, 1],
+    'Unit_Price': [1000, 500, 300, 400, 1000, 500, 300],
+    'Customer_ID': [1, 2, 3, 1, 2, 3, 1],
+    'Date': ['2024-11-01', '2024-11-02', '2024-11-03', '2024-11-04', '2024-11-05', '2024-11-06', '2024-11-07'],
+}
+
+# Create a DataFrame
+sales_data = pd.DataFrame(data)
+
+# Add a 'Total_Sales' column
+sales_data['Total_Sales'] = sales_data['Quantity'] * sales_data['Unit_Price']
+
+print(sales_data)
