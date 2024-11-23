@@ -1,0 +1,11 @@
+-- Count the number of employees
+SELECT COUNT(*) FROM employees;
+
+-- Calculate the average salary of employees
+SELECT AVG(salary) AS average_salary FROM employees;
+
+-- Find the highest salary
+SELECT MAX(salary) AS highest_salary FROM employees;
+
+-- Find the lowest salary
+SELECT MIN(salary) AS lowest_salary FROM employees;
