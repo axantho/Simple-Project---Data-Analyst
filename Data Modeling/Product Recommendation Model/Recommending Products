@@ -1,0 +1,9 @@
+customer_id = 1
+similar_customers = cosine_sim_df[customer_id].sort_values(ascending=False)
+
+# Get top 2 most similar customers (excluding the customer itself)
+recommended_customers = similar_customers.iloc[1:3].index
+
+# Display recommended products from similar customers
+recommended_products = ratings_df[ratings_df['Customer_ID'].isin(recommended_customers)]['Product_ID'].unique()
+print("Recommended Products:", recommended_products)
