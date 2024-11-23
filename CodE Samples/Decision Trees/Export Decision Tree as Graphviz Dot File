@@ -1,0 +1,12 @@
+from sklearn.tree import export_graphviz
+import graphviz
+
+# Export the tree to Graphviz
+dot_data = export_graphviz(clf, out_file=None, 
+                           feature_names=data.feature_names, 
+                           class_names=data.target_names, 
+                           filled=True, rounded=True, special_characters=True)
+
+# Render the tree
+graph = graphviz.Source(dot_data)
+graph.render("decision_tree")  # Saves as decision_tree.pdf
