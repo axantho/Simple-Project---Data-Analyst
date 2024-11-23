@@ -1,0 +1,12 @@
+# Calculate profit margin for each transaction
+financial_df['Profit_Margin'] = financial_df['Profit'] / financial_df['Revenue'] * 100
+
+# Grouping by date and calculating total revenue, expenses, and profit
+daily_performance = financial_df.groupby('Date').agg({
+    'Revenue': 'sum',
+    'Expenses': 'sum',
+    'Profit': 'sum',
+    'Profit_Margin': 'mean'
+}).reset_index()
+
+print(daily_performance)
