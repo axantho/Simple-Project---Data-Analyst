@@ -1,1 +1,12 @@
 
+# Simulating time series data for stock prices
+dates = pd.date_range(start='2024-01-01', periods=10, freq='D')
+stock_data = {
+    'Date': dates,
+    'Stock_Price': [150, 153, 155, 157, 158, 160, 162, 163, 165, 167]
+}
+
+stock_df = pd.DataFrame(stock_data)
+stock_df.set_index('Date', inplace=True)
+
+print(stock_df)
