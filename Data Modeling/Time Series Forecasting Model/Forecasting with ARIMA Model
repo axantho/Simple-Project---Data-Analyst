@@ -1,0 +1,10 @@
+from statsmodels.tsa.arima.model import ARIMA
+
+# Fit an ARIMA model (Auto-Regressive Integrated Moving Average)
+model = ARIMA(stock_df['Stock_Price'], order=(1, 1, 1))  # ARIMA(p,d,q)
+model_fit = model.fit()
+
+# Make predictions for the next 5 days
+forecast = model_fit.forecast(steps=5)
+
+print(forecast)
