@@ -1,0 +1,5 @@
+-- Retrieve all employees, ordered by age in ascending order
+SELECT name, age FROM employees ORDER BY age ASC;
+
+-- Retrieve employees ordered by salary in descending order
+SELECT name, salary FROM employees ORDER BY salary DESC;
