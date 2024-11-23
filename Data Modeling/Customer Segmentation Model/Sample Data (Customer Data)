@@ -1,1 +1,24 @@
 
+# Simulating customer data
+customer_data = {
+    'Customer_ID': [1, 2, 3, 4, 5],
+    'Total_Purchases': [5000, 12000, 2000, 8000, 3000],
+    'Frequency': [5, 15, 2, 8, 4],
+    'Recency': [10, 3, 30, 7, 15],  # Days since last purchase
+}
+
+customer_df = pd.DataFrame(customer_data)
+
+# Using customer data to create segments based on 'Total_Purchases', 'Frequency', and 'Recency'
+from sklearn.cluster import KMeans
+
+# Normalize data
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+normalized_data = scaler.fit_transform(customer_df[['Total_Purchases', 'Frequency', 'Recency']])
+
+# Applying KMeans clustering to segment customers into 3 groups
+kmeans = KMeans(n_clusters=3, random_state=42)
+customer_df['Segment'] = kmeans.fit_predict(normalized_data)
+
+print(customer_df)
