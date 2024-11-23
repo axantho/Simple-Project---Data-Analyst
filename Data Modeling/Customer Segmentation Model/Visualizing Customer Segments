@@ -1,0 +1,7 @@
+# Plotting the segments
+plt.scatter(customer_df['Total_Purchases'], customer_df['Frequency'], c=customer_df['Segment'], cmap='viridis')
+plt.title('Customer Segmentation: Purchases vs Frequency')
+plt.xlabel('Total Purchases')
+plt.ylabel('Frequency')
+plt.colorbar(label='Segment')
+plt.show()
