@@ -1,0 +1,23 @@
+from sklearn.cluster import KMeans
+from sklearn.datasets import load_iris
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load Iris dataset
+data = load_iris()
+X = data.data
+
+# Apply K-Means clustering
+kmeans = KMeans(n_clusters=3, random_state=42)
+labels = kmeans.fit_predict(X)
+
+# Convert to DataFrame
+df = pd.DataFrame(X, columns=data.feature_names)
+df['Cluster'] = labels
+
+# Plot Sepal Length vs Sepal Width
+plt.scatter(df.iloc[:, 0], df.iloc[:, 1], c=labels, cmap='viridis', s=50)
+plt.xlabel('Sepal Length')
+plt.ylabel('Sepal Width')
+plt.title('K-Means Clustering on Iris Data')
+plt.show()
