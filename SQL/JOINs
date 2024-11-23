@@ -1,0 +1,4 @@
+-- Retrieve employees and their department details by joining "employees" with "departments"
+SELECT employees.name, employees.salary, departments.department_name
+FROM employees
+INNER JOIN departments ON employees.department_id = departments.department_id;
