@@ -1,0 +1,8 @@
+import matplotlib.pyplot as plt
+
+# Plotting total sales by product
+plt.bar(total_sales_by_product['Product_Name'], total_sales_by_product['Total_Sales'], color='skyblue')
+plt.title('Total Sales by Product')
+plt.xlabel('Product Name')
+plt.ylabel('Total Sales ($)')
+plt.show()
