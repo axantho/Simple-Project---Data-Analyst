@@ -1,0 +1,4 @@
+# Grouping by Product_Name and calculating total sales
+total_sales_by_product = sales_data.groupby('Product_Name')['Total_Sales'].sum().reset_index()
+
+print(total_sales_by_product)
