@@ -1,0 +1,21 @@
+
+from flask import Flask, request, render_template_string
+import random
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    user_id = request.args.get('userId', str(random.randint(1000, 9999)))  # Generate a random user ID if not provided
+    variant = 'A' if random.random() < 0.5 else 'B'  # Randomly assign variant
+
+    # Store the variant in session or database (optional)
+    # For this example, we directly pass the variant to the template.
+
+    if variant == 'A':
+        return render_template_string('<h1>Welcome to Variant A</h1><p>This is Variant A content.</p>')
+    else:
+        return render_template_string('<h1>Welcome to Variant B</h1><p>This is Variant B content.</p>')
+
+if __name__ == '__main__':
+    app.run(debug=True)
