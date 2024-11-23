@@ -1,0 +1,41 @@
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Set a random seed for reproducibility
+np.random.seed(42)
+
+# Simulating the number of users and conversions for two variants
+data = {
+    'Variant': ['A'] * 500 + ['B'] * 500,
+    'Users': np.concatenate([np.random.randint(1000, 1200, 500), np.random.randint(1000, 1200, 500)]),
+    'Conversions': np.concatenate([np.random.randint(200, 400, 500), np.random.randint(200, 400, 500)])
+}
+
+# Create a Pandas DataFrame
+df = pd.DataFrame(data)
+
+# Add a new column for conversion rate (percentage of users who converted)
+df['Conversion Rate'] = df['Conversions'] / df['Users'] * 100
+
+# Grouping by Variant and calculating average users, conversions, and conversion rate
+grouped = df.groupby('Variant').agg({
+    'Users': 'sum',
+    'Conversions': 'sum',
+    'Conversion Rate': 'mean'
+}).reset_index()
+
+# Plotting the Conversion Rates for Variant A and Variant B
+plt.figure(figsize=(8, 6))
+
+# Plotting the conversion rate for each variant
+plt.bar(grouped['Variant'], grouped['Conversion Rate'], color=['blue', 'orange'])
+
+# Adding titles and labels
+plt.title('A/B Test: Conversion Rates for Variant A and Variant B', fontsize=16)
+plt.xlabel('Variant', fontsize=12)
+plt.ylabel('Conversion Rate (%)', fontsize=12)
+
+# Display the plot
+plt.show()
