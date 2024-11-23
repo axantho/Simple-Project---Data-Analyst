@@ -1,0 +1,33 @@
+
+const express = require('express');
+const redis = require('redis');
+const app = express();
+const client = redis.createClient();
+
+const getVariant = (userId) => {
+  return new Promise((resolve, reject) => {
+    client.hget('ab_test', userId, (err, result) => {
+      if (err) reject(err);
+      resolve(result || (Math.random() < 0.5 ? 'A' : 'B')); // Randomly assign if no variant is found
+    });
+  });
+};
+
+app.get('/', async (req, res) => {
+  const userId = req.query.userId || Math.random().toString(36).substring(7); // Generate a random user ID if not provided
+  let variant = await getVariant(userId);
+
+  // Store the variant in Redis for future requests
+  client.hset('ab_test', userId, variant);
+
+  // Serve different content based on the assigned variant
+  if (variant === 'A') {
+    res.send('<h1>Welcome to Variant A</h1><p>This is Variant A content.</p>');
+  } else {
+    res.send('<h1>Welcome to Variant B</h1><p>This is Variant B content.</p>');
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000');
+});
