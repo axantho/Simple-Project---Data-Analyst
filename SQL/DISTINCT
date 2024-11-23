@@ -1,0 +1,2 @@
+-- Retrieve unique departments from the "employees" table
+SELECT DISTINCT department FROM employees;
