@@ -1,0 +1,9 @@
+plt.plot(stock_df.index, stock_df['Stock_Price'], label='Actual Stock Price')
+forecast_dates = pd.date_range(start=stock_df.index[-1] + pd.Timedelta(days=1), periods=5, freq='D')
+plt.plot(forecast_dates, forecast, label='Forecasted Stock Price', linestyle='--', color='red')
+
+plt.title('Stock Price Forecast')
+plt.xlabel('Date')
+plt.ylabel('Stock Price ($)')
+plt.legend()
+plt.show()
