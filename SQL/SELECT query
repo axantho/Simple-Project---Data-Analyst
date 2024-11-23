@@ -1,1 +1,5 @@
-SQL
+-- Retrieve all columns from the "employees" table
+SELECT * FROM employees;
+
+-- Retrieve specific columns (name and department) from the "employees" table
+SELECT name, department FROM employees;
