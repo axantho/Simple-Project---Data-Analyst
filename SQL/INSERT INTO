@@ -1,0 +1,4 @@
+
+-- Insert a new employee into the "employees" table
+INSERT INTO employees (name, department, age, salary)
+VALUES ('John Doe', 'Finance', 28, 45000);
