@@ -1,0 +1,4 @@
+-- Update the salary of the employee with ID 5
+UPDATE employees
+SET salary = 50000
+WHERE employee_id = 5;
