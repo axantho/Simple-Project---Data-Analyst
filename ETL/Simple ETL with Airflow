@@ -1,0 +1,27 @@
+from airflow import DAG
+from airflow.operators.python_operator import PythonOperator
+from datetime import datetime
+
+def extract():
+    # Simulate data extraction
+    print("Extracting data...")
+
+def transform():
+    # Simulate data transformation
+    print("Transforming data...")
+
+def load():
+    # Simulate data loading
+    print("Loading data...")
+
+# Define the DAG
+dag = DAG('simple_etl', description='Simple ETL Pipeline',
+          schedule_interval='@daily', start_date=datetime(2024, 1, 1), catchup=False)
+
+# Define tasks
+extract_task = PythonOperator(task_id='extract', python_callable=extract, dag=dag)
+transform_task = PythonOperator(task_id='transform', python_callable=transform, dag=dag)
+load_task = PythonOperator(task_id='load', python_callable=load, dag=dag)
+
+# Set task dependencies
+extract_task >> transform_task >> load_task
