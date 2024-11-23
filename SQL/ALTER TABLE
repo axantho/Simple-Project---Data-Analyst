@@ -1,0 +1,7 @@
+-- Add a new column to the "employees" table
+ALTER TABLE employees
+ADD email VARCHAR(100);
+
+-- Change the data type of the "age" column
+ALTER TABLE employees
+MODIFY age INT;
